@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Sitemap: https://zenher.in/sitemap.xml
+Host: https://zenher.in
+# Crawl-delay can be set if needed
+# Crawl-delay: 10

@@ -1,0 +1,31 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum Category {
+  Hormones
+  Maternal_Health @map("Maternal Health")
+  Period_Health   @map("Period Health")
+  Nutrition
+  Mental_Health   @map("Mental Health")
+  General
+}
+
+model Post {
+  id        String   @id @default(uuid())
+  title     String   @db.VarChar(120)
+  content   String   @db.Text
+  category  Category
+  author    String   @db.VarChar(100)
+  
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@index([createdAt(sort: Desc)])
+  @@index([category])
+  @@map("posts")
+}
