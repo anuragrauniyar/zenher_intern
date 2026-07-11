@@ -7,5 +7,9 @@ export const createPostSchema = z.object({
   category: z.string().min(1, "Category is required")
 });
 
-// This exports the TypeScript type inferred directly from the Zod schema
+export const searchPostsSchema = z.object({
+  query: z.string().trim().max(200).optional(),
+});
+
 export type CreatePostInput = z.infer<typeof createPostSchema>;
+export type SearchPostsQuery = z.infer<typeof searchPostsSchema>;

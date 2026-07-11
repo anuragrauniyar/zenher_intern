@@ -12,8 +12,18 @@ export class PostService {
     });
   }
 
-  async getPosts() {
+  async getPosts(searchQuery?: string) {
+    const whereClause = searchQuery
+      ? {
+          OR: [
+            { title: { contains: searchQuery, mode: 'insensitive' as const } },
+            { content: { contains: searchQuery, mode: 'insensitive' as const } },
+          ],
+        }
+      : {};
+
     return await prisma.post.findMany({
+      where: whereClause,
       orderBy: { createdAt: 'desc' },
     });
   }

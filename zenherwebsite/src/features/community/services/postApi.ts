@@ -2,8 +2,17 @@ import { ApiError } from '@/utils/ApiError';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
-export const fetchPosts = async () => {
-  const response = await fetch(`${API_BASE_URL}/posts`);
+export const fetchPosts = async (query?: string) => {
+  const params = new URLSearchParams();
+
+  if (query?.trim()) {
+    params.set("query", query.trim());
+  }
+
+  const queryString = params.toString();
+  const url = `${API_BASE_URL}/posts${queryString ? `?${queryString}` : ""}`;
+
+  const response = await fetch(url);
   
   if (!response.ok) {
     const result = await response.json().catch(() => ({}));

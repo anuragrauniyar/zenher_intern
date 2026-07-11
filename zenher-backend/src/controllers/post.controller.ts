@@ -20,7 +20,8 @@ export class PostController {
   });
 
   getPosts = asyncHandler(async (req: Request, res: Response) => {
-    const posts = await postService.getPosts();
+    const query = req.query.query as string | undefined;
+    const posts = await postService.getPosts(query);
     return sendSuccess(res, 200, 'Posts fetched successfully', posts);
   });
 
