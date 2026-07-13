@@ -9,7 +9,6 @@ export const indexPost = async (post: Post): Promise<void> => {
 
   const task = await index.addDocuments([document], { primaryKey: "id" });
 
-  // Polling REST API to bypass SDK version mismatches
   const host = process.env.MEILISEARCH_HOST || 'http://localhost:7700';
   const apiKey = process.env.MEILISEARCH_MASTER_KEY || '';
 

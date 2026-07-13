@@ -22,13 +22,11 @@ const indexExistingPosts = async () => {
 
     console.log(`Waiting for Meilisearch task (UID: ${task.taskUid}) to complete...`);
     
-    // Bypass the SDK version issues and poll the REST API directly
     const host = process.env.MEILISEARCH_HOST || 'http://localhost:7700';
     const apiKey = process.env.MEILISEARCH_MASTER_KEY || '';
     
     let status = 'enqueued';
     while (status === 'enqueued' || status === 'processing') {
-      // Wait 500ms before checking again
       await new Promise(resolve => setTimeout(resolve, 500));
       
       const response = await fetch(`${host}/tasks/${task.taskUid}`, {
@@ -45,7 +43,6 @@ const indexExistingPosts = async () => {
 
     console.log(`Successfully indexed ${documents.length} posts.`);
     
-    // Verify count in Meilisearch
     const stats = await index.getStats();
     console.log(`Verification: ${stats.numberOfDocuments} documents currently in '${POST_INDEX_NAME}' index.`);
 
